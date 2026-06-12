@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -48,6 +48,12 @@
   --green:#1a7a3c;--green-light:#2d9e52;--green-pale:#e8f5ed;--green-pale2:#d4eddc;
   --black:#0d0d0d;--dark:#1a1a1a;--text:#1c1c1c;--gray:#555;--light-gray:#888;
   --shadow:0 4px 24px rgba(26,122,60,0.10);--shadow-lg:0 12px 48px rgba(26,122,60,0.14);
+  --deep-blue:#0a1f4d;--sky-blue:#38bdf8;--pink:#ec4899;--pink-light:#f472b6;
+  --hero-grad:linear-gradient(135deg,#0a1f4d 0%,#1e3a8a 45%,#38bdf8 100%);
+  --skills-grad:linear-gradient(135deg,#0d0d0d 0%,#1a0a14 45%,#831843 100%);
+  --contact-grad:linear-gradient(135deg,#0d0d0d 0%,#3b0a24 60%,#ec4899 130%);
+  --shadow-blue:0 12px 48px rgba(56,189,248,0.18);
+  --shadow-pink:0 12px 48px rgba(236,72,153,0.18);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -59,28 +65,29 @@ nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-
 .nav-links a:hover{color:var(--green);border-bottom-color:var(--green);}
 .nav-admin-btn{padding:8px 18px;background:var(--green);color:var(--white)!important;border-radius:4px;font-family:'Space Mono',monospace;font-size:0.62rem!important;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.3s;border-bottom:none!important;}
 .nav-admin-btn:hover{background:var(--green-light)!important;transform:translateY(-1px);}
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 64px 60px;background:linear-gradient(135deg,var(--white) 60%,var(--green-pale) 100%);position:relative;overflow:hidden;gap:60px;}
-.hero-bg-circle{position:absolute;right:-120px;top:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,var(--green-pale2) 0%,transparent 70%);z-index:0;}
-.hero-bg-dots{position:absolute;left:0;bottom:0;width:300px;height:300px;background-image:radial-gradient(var(--border2) 1.5px,transparent 1.5px);background-size:24px 24px;z-index:0;opacity:0.6;}
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 64px 60px;background:var(--hero-grad);position:relative;overflow:hidden;gap:60px;}
+.hero-bg-circle{position:absolute;right:-120px;top:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.25) 0%,transparent 70%);z-index:0;}
+.hero-bg-dots{position:absolute;left:0;bottom:0;width:300px;height:300px;background-image:radial-gradient(rgba(255,255,255,0.15) 1.5px,transparent 1.5px);background-size:24px 24px;z-index:0;opacity:0.6;}
 .hero-left{position:relative;z-index:1;}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--green-pale);border:1px solid var(--green-pale2);border-radius:100px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.2s ease forwards;}
-.hero-tag::before{content:'●';font-size:0.5rem;color:var(--green);}
-.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:700;line-height:1.1;color:var(--dark);opacity:0;animation:fadeUp 0.7s 0.4s ease forwards;}
-.hero-name span{color:var(--green);}
-.hero-subtitle{font-size:1rem;color:var(--gray);margin-top:20px;max-width:460px;line-height:1.8;font-weight:400;opacity:0;animation:fadeUp 0.7s 0.6s ease forwards;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.35);border-radius:100px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--sky-blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;opacity:0;animation:fadeUp 0.7s 0.2s ease forwards;}
+.hero-tag::before{content:'●';font-size:0.5rem;color:var(--sky-blue);}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:700;line-height:1.1;color:var(--white);opacity:0;animation:fadeUp 0.7s 0.4s ease forwards;}
+.hero-name span{color:var(--sky-blue);}
+.hero-subtitle{font-size:1rem;color:rgba(255,255,255,0.75);margin-top:20px;max-width:460px;line-height:1.8;font-weight:400;opacity:0;animation:fadeUp 0.7s 0.6s ease forwards;}
+.hero-subtitle strong{color:var(--white)!important;}
 .hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;opacity:0;animation:fadeUp 0.7s 0.8s ease forwards;}
-.badge{padding:6px 14px;border:1px solid var(--border2);border-radius:4px;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;background:var(--white);}
-.badge.green{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+.badge{padding:6px 14px;border:1px solid rgba(255,255,255,0.2);border-radius:4px;font-family:'Space Mono',monospace;font-size:0.62rem;color:rgba(255,255,255,0.8);letter-spacing:1px;text-transform:uppercase;background:rgba(255,255,255,0.06);}
+.badge.green{border-color:var(--sky-blue);color:var(--sky-blue);background:rgba(56,189,248,0.12);}
 .hero-cta{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.7s 1s ease forwards;}
-.btn-primary{padding:14px 32px;background:var(--green);color:var(--white);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;border-radius:4px;box-shadow:0 4px 16px rgba(26,122,60,0.25);}
-.btn-primary:hover{background:var(--green-light);transform:translateY(-2px);}
-.btn-secondary{padding:14px 32px;background:transparent;color:var(--green);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--green);cursor:pointer;transition:all 0.3s;border-radius:4px;}
-.btn-secondary:hover{background:var(--green-pale);transform:translateY(-2px);}
+.btn-primary{padding:14px 32px;background:var(--sky-blue);color:var(--deep-blue);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;border-radius:4px;box-shadow:0 4px 20px rgba(56,189,248,0.35);}
+.btn-primary:hover{background:#7dd3fc;transform:translateY(-2px);}
+.btn-secondary{padding:14px 32px;background:transparent;color:var(--white);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--sky-blue);cursor:pointer;transition:all 0.3s;border-radius:4px;}
+.btn-secondary:hover{background:rgba(56,189,248,0.15);transform:translateY(-2px);}
 .hero-right{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 1s 0.5s ease forwards;}
 .photo-frame{position:relative;width:320px;height:400px;}
-.photo-bg-rect{position:absolute;width:100%;height:100%;background:var(--green-pale2);border-radius:12px;top:16px;left:16px;z-index:0;}
-.photo-border{position:absolute;width:100%;height:100%;border:3px solid var(--green);border-radius:12px;top:-8px;left:-8px;z-index:0;opacity:0.3;}
-.photo-img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:12px;box-shadow:var(--shadow-lg);}
+.photo-bg-rect{position:absolute;width:100%;height:100%;background:rgba(56,189,248,0.18);border-radius:12px;top:16px;left:16px;z-index:0;}
+.photo-border{position:absolute;width:100%;height:100%;border:3px solid var(--sky-blue);border-radius:12px;top:-8px;left:-8px;z-index:0;opacity:0.4;}
+.photo-img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,0.4);}
 .photo-badge{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:var(--white);border:1px solid var(--border);border-radius:8px;padding:12px 24px;box-shadow:var(--shadow);white-space:nowrap;z-index:2;text-align:center;}
 .photo-badge-name{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--dark);}
 .photo-badge-role{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
@@ -98,60 +105,74 @@ section{padding:90px 64px;position:relative;}
 .info-item{padding:18px 20px;background:var(--white);border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--green);box-shadow:0 2px 8px rgba(0,0,0,0.04);}
 .info-label{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;}
 .info-value{font-size:0.88rem;color:var(--dark);font-weight:500;}
-#skills{background:var(--white);border-top:1px solid var(--border);}
+#skills{background:var(--skills-grad);border-top:1px solid rgba(255,255,255,0.06);}
+#skills .section-label{color:var(--pink-light);}
+#skills .section-title{color:var(--white);}
+#skills .section-underline{background:var(--pink);}
+.skills-subtitle{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--pink-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.skills-subtitle:not(:first-of-type){margin-top:48px;}
+.skills-subtitle::after{content:'';flex:1;height:1px;background:rgba(236,72,153,0.25);}
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
-.skill-card{padding:26px;background:var(--white);border:1px solid var(--border);border-radius:10px;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
-.skill-card:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.skill-card{padding:26px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+.skill-card:hover{border-color:var(--pink);transform:translateY(-4px);box-shadow:var(--shadow-pink);}
 .skill-icon{font-size:1.8rem;margin-bottom:14px;}
-.skill-name{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--dark);margin-bottom:6px;font-weight:700;}
-.skill-level{font-size:0.78rem;color:var(--light-gray);margin-bottom:14px;}
-.skill-bar{height:4px;background:var(--light);border-radius:2px;overflow:hidden;}
-.skill-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-light));border-radius:2px;}
+.skill-name{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--white);margin-bottom:6px;font-weight:700;}
+.skill-level{font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:14px;}
+.skill-bar{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;}
+.skill-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--sky-blue));border-radius:2px;}
 #projects{background:var(--off-white);border-top:1px solid var(--border);}
+#projects .section-label{color:var(--deep-blue);}
+#projects .section-underline{background:linear-gradient(90deg,var(--deep-blue),var(--sky-blue));}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;}
 .project-card{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
-.project-card:hover{border-color:var(--green);transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.project-card:hover{border-color:var(--sky-blue);transform:translateY(-5px);box-shadow:var(--shadow-blue);}
 .project-header{padding:24px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;}
-.project-type-badge{display:inline-block;padding:4px 10px;background:var(--green-pale);border:1px solid var(--green-pale2);font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;}
+.project-type-badge{display:inline-block;padding:4px 10px;background:#e0f2fe;border:1px solid #bae6fd;font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--deep-blue);letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;}
 .project-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--dark);margin-top:10px;font-weight:700;}
 .project-body{padding:18px 24px 24px;}
 .project-desc{color:var(--gray);font-size:0.85rem;line-height:1.7;margin-bottom:14px;}
 .project-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
 .tag{padding:3px 9px;background:var(--light);border-radius:3px;font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
-.project-file-link{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--green-pale);border:1px solid var(--green-pale2);border-radius:6px;color:var(--green);font-family:'Space Mono',monospace;font-size:0.65rem;cursor:pointer;transition:all 0.3s;text-decoration:none;}
-.project-file-link:hover{background:var(--green);color:var(--white);}
+.project-file-link{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:6px;color:var(--deep-blue);font-family:'Space Mono',monospace;font-size:0.65rem;cursor:pointer;transition:all 0.3s;text-decoration:none;}
+.project-file-link:hover{background:var(--deep-blue);color:var(--white);}
 #cv{background:var(--white);border-top:1px solid var(--border);}
+#cv .section-label{color:var(--deep-blue);}
+#cv .section-underline{background:linear-gradient(90deg,var(--deep-blue),var(--sky-blue));}
 .cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
 .cv-card{padding:40px;background:var(--off-white);border:1px solid var(--border);border-radius:12px;text-align:center;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
-.cv-card:hover{border-color:var(--green);box-shadow:var(--shadow-lg);transform:translateY(-4px);}
+.cv-card:hover{border-color:var(--sky-blue);box-shadow:var(--shadow-blue);transform:translateY(-4px);}
 .cv-card-icon{font-size:2.8rem;margin-bottom:16px;}
 .cv-card-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--dark);font-weight:700;margin-bottom:8px;}
 .cv-card-desc{color:var(--gray);font-size:0.85rem;line-height:1.6;margin-bottom:24px;}
-.cv-download-btn{display:inline-block;padding:12px 28px;border:2px solid var(--green);color:var(--green);font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;background:transparent;border-radius:6px;text-decoration:none;}
-.cv-download-btn:hover{background:var(--green);color:var(--white);}
-.cv-status{margin-top:12px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--green);}
-#contact{background:var(--off-white);border-top:1px solid var(--border);}
+.cv-download-btn{display:inline-block;padding:12px 28px;border:2px solid var(--deep-blue);color:var(--deep-blue);font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;background:transparent;border-radius:6px;text-decoration:none;}
+.cv-download-btn:hover{background:var(--deep-blue);color:var(--white);}
+.cv-status{margin-top:12px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--deep-blue);}
+#contact{background:var(--contact-grad);border-top:1px solid rgba(255,255,255,0.06);}
+#contact .section-label{color:var(--pink-light);}
+#contact .section-title{color:var(--white);}
+#contact .section-underline{background:var(--pink);}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
 .contact-info-list{display:flex;flex-direction:column;gap:16px;margin-top:8px;}
-.contact-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:var(--white);border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--green);box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:all 0.3s;}
-.contact-item:hover{box-shadow:var(--shadow);transform:translateX(4px);}
+.contact-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;border-left:3px solid var(--pink);box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:all 0.3s;}
+.contact-item:hover{box-shadow:var(--shadow-pink);transform:translateX(4px);}
 .contact-icon{font-size:1.3rem;flex-shrink:0;}
-.contact-label{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
-.contact-val{font-size:0.88rem;color:var(--dark);font-weight:500;}
+.contact-label{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--pink-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.contact-val{font-size:0.88rem;color:var(--white);font-weight:500;}
 .contact-val a{color:inherit;text-decoration:none;}
-.contact-val a:hover{color:var(--green);}
+.contact-val a:hover{color:var(--sky-blue);}
 .contact-form{display:flex;flex-direction:column;gap:16px;}
 .form-group{display:flex;flex-direction:column;gap:7px;}
-.form-label{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;}
-.form-input,.form-textarea{background:var(--white);border:1.5px solid var(--border);color:var(--dark);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border 0.3s;resize:none;border-radius:6px;}
-.form-input:focus,.form-textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(26,122,60,0.08);}
+.form-label{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--pink-light);letter-spacing:2px;text-transform:uppercase;}
+.form-input,.form-textarea{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.12);color:var(--white);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border 0.3s;resize:none;border-radius:6px;}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,0.35);}
+.form-input:focus,.form-textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(236,72,153,0.12);}
 .form-textarea{height:120px;}
-.form-submit{padding:15px;background:var(--green);color:var(--white);border:none;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;border-radius:6px;}
-.form-submit:hover{background:var(--green-light);transform:translateY(-2px);}
-footer{padding:36px 64px;background:var(--dark);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
-.footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green);font-weight:700;}
+.form-submit{padding:15px;background:var(--pink);color:var(--white);border:none;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;border-radius:6px;}
+.form-submit:hover{background:var(--pink-light);transform:translateY(-2px);}
+footer{padding:36px 64px;background:var(--black);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--sky-blue);font-weight:700;}
 .footer-text{font-family:'Space Mono',monospace;font-size:0.62rem;color:#888;letter-spacing:1px;}
-.footer-text span{color:var(--green);}
+.footer-text span{color:var(--pink-light);}
 .scroll-indicator{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100;}
 .scroll-dot{width:7px;height:7px;border:1.5px solid var(--border2);border-radius:50%;transition:all 0.3s;cursor:pointer;background:transparent;}
 .scroll-dot.active{background:var(--green);border-color:var(--green);transform:scale(1.4);}
@@ -316,15 +337,33 @@ footer{padding:36px 64px;background:var(--dark);display:flex;justify-content:spa
   <div class="section-label">// 02 — Skills</div>
   <h2 class="section-title">What I Know</h2>
   <div class="section-underline"></div>
+
+  <div class="skills-subtitle">💻 Computer Skills</div>
   <div class="skills-grid">
     <div class="skill-card"><div class="skill-icon">📄</div><div class="skill-name">Microsoft Word</div><div class="skill-level">Technical Report Writing & Documentation</div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-name">Microsoft Excel</div><div class="skill-level">Data Analysis & Spreadsheet Management</div><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">📽️</div><div class="skill-name">Microsoft PowerPoint</div><div class="skill-level">Presentation Design & Delivery</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">🗃️</div><div class="skill-name">Microsoft Access</div><div class="skill-level">Database Design & Management</div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">📑</div><div class="skill-name">PDF Tools</div><div class="skill-level">Document Formatting & Professional Editing</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">🖌️</div><div class="skill-name">Adobe Photoshop</div><div class="skill-level">Image Editing & Visual Design</div><div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-name">Adobe Illustrator</div><div class="skill-level">Vector Design & Technical Illustration</div><div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">📐</div><div class="skill-name">AutoCAD</div><div class="skill-level">Technical Drawing & Drafting</div><div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">👗</div><div class="skill-name">CLO 3D</div><div class="skill-level">3D Garment Simulation & Design</div><div class="skill-bar"><div class="skill-fill" style="width:55%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">🤖</div><div class="skill-name">AI Technology</div><div class="skill-level">AI Tools for Design & Productivity</div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">🧵</div><div class="skill-name">Textile Technology</div><div class="skill-level">Apparel, Fabric & Garment Engineering</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">📐</div><div class="skill-name">Technical Drawing</div><div class="skill-level">Pattern Making & Garment Illustration</div><div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div></div>
     <div class="skill-card"><div class="skill-icon">🔬</div><div class="skill-name">Lab Reports</div><div class="skill-level">Textile Testing & Quality Analysis</div><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+  </div>
+
+  <div class="skills-subtitle">🤝 Soft Skills</div>
+  <div class="skills-grid">
+    <div class="skill-card"><div class="skill-icon">📋</div><div class="skill-name">Project Management</div><div class="skill-level">Planning, Organizing & Execution</div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">🤝</div><div class="skill-name">Public Relations</div><div class="skill-level">Networking & Stakeholder Engagement</div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">👥</div><div class="skill-name">Teamwork</div><div class="skill-level">Collaboration & Group Work</div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">⏰</div><div class="skill-name">Time Management</div><div class="skill-level">Prioritization & Deadline Handling</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">🌟</div><div class="skill-name">Leadership</div><div class="skill-level">Guiding & Motivating Teams</div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">💬</div><div class="skill-name">Effective Communication</div><div class="skill-level">Clear Verbal & Written Expression</div><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+    <div class="skill-card"><div class="skill-icon">🧠</div><div class="skill-name">Critical Thinking</div><div class="skill-level">Analysis & Problem Solving</div><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
   </div>
 </section>
 
