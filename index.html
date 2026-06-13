@@ -124,6 +124,11 @@ section{padding:90px 64px;position:relative;}
 #projects .section-label{color:var(--deep-blue);}
 #projects .section-underline{background:linear-gradient(90deg,var(--deep-blue),var(--sky-blue));}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;}
+.proj-cat-group{margin-bottom:48px;}
+.proj-cat-group:last-child{margin-bottom:0;}
+.proj-cat-title{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--deep-blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-weight:700;}
+.proj-cat-title::after{content:'';flex:1;height:1px;background:var(--border2);}
+.proj-cat-icon{font-size:1.1rem;}
 .project-card{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
 .project-card:hover{border-color:var(--sky-blue);transform:translateY(-5px);box-shadow:var(--shadow-blue);}
 .project-header{padding:24px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;}
@@ -455,10 +460,19 @@ footer{padding:36px 64px;background:var(--black);display:flex;justify-content:sp
               <div><label class="f-label">Project Title *</label><input class="f-input" id="f-title" placeholder="e.g. Fabric Structure Analysis"></div>
               <div><label class="f-label">Category *</label>
                 <select class="f-select" id="f-type">
-                  <option value="Textile">Textile</option>
-                  <option value="Technical">Technical</option>
-                  <option value="Design">Design</option>
-                  <option value="Research">Research</option>
+                  <option value="Word">Microsoft Word</option>
+                  <option value="Excel">Microsoft Excel</option>
+                  <option value="PowerPoint">Microsoft PowerPoint</option>
+                  <option value="Access">Microsoft Access</option>
+                  <option value="PDF">PDF Tools</option>
+                  <option value="Photoshop">Adobe Photoshop</option>
+                  <option value="Illustrator">Adobe Illustrator</option>
+                  <option value="AutoCAD">AutoCAD</option>
+                  <option value="CLO3D">CLO 3D</option>
+                  <option value="AI">AI Technology</option>
+                  <option value="Textile">Textile Technology</option>
+                  <option value="TechnicalDrawing">Technical Drawing</option>
+                  <option value="LabReport">Lab Report</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
@@ -562,38 +576,88 @@ async function loadAllData() {
 }
 
 // ===== RENDER PROJECTS =====
+// Category metadata: label + icon, in display order
+const CATEGORY_META = {
+  Word: { label: 'Microsoft Word', icon: '📄' },
+  Excel: { label: 'Microsoft Excel', icon: '📊' },
+  PowerPoint: { label: 'Microsoft PowerPoint', icon: '📽️' },
+  Access: { label: 'Microsoft Access', icon: '🗃️' },
+  PDF: { label: 'PDF Tools', icon: '📑' },
+  Photoshop: { label: 'Adobe Photoshop', icon: '🖌️' },
+  Illustrator: { label: 'Adobe Illustrator', icon: '🎨' },
+  AutoCAD: { label: 'AutoCAD', icon: '📐' },
+  CLO3D: { label: 'CLO 3D', icon: '👗' },
+  AI: { label: 'AI Technology', icon: '🤖' },
+  Textile: { label: 'Textile Technology', icon: '🧵' },
+  TechnicalDrawing: { label: 'Technical Drawing', icon: '📐' },
+  LabReport: { label: 'Lab Report', icon: '🔬' },
+  Other: { label: 'Other Projects', icon: '📁' }
+};
+const CATEGORY_ORDER = ['Word','Excel','PowerPoint','Access','PDF','Photoshop','Illustrator','AutoCAD','CLO3D','AI','Textile','TechnicalDrawing','LabReport','Other'];
+
 function renderProjects(projects) {
   const grid = document.getElementById('projects-grid');
   if(!projects || !projects.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;font-family:Space Mono,monospace;font-size:0.72rem;color:var(--light-gray);">No projects yet. Add from Admin Panel!</div>';
+    grid.innerHTML = '<div style="text-align:center;padding:60px;font-family:Space Mono,monospace;font-size:0.72rem;color:var(--light-gray);">No projects yet. Add from Admin Panel!</div>';
     return;
   }
-  grid.innerHTML = '';
+  // Group projects by category
+  const groups = {};
   projects.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    const tagsHtml = (p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
-    const fileHtml = p.link
-      ? `<a class="project-file-link" href="${p.link}" target="_blank">📎 View Project File</a>`
-      : `<div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--light-gray);padding:8px 0;">📂 No file attached</div>`;
-    card.innerHTML = `
-      <div class="project-header">
-        <div>
-          <div class="project-type-badge">${p.type||'Project'}</div>
-          <div class="project-title">${p.title}</div>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">${p.desc}</p>
-        <div class="project-tags">${tagsHtml}</div>
-        ${fileHtml}
-      </div>`;
-    grid.appendChild(card);
+    const cat = p.type || 'Other';
+    if(!groups[cat]) groups[cat] = [];
+    groups[cat].push(p);
   });
+
+  grid.innerHTML = '';
+  grid.style.display = 'block'; // override grid display since we now use sections
+
+  // Iterate in defined order, then any leftover categories
+  const orderedCats = [...CATEGORY_ORDER.filter(c=>groups[c]), ...Object.keys(groups).filter(c=>!CATEGORY_ORDER.includes(c))];
+
+  orderedCats.forEach(cat => {
+    const meta = CATEGORY_META[cat] || { label: cat, icon: '📁' };
+    const groupDiv = document.createElement('div');
+    groupDiv.className = 'proj-cat-group';
+
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'proj-cat-title';
+    titleDiv.innerHTML = `<span class="proj-cat-icon">${meta.icon}</span> ${meta.label} <span style="color:var(--light-gray);font-weight:400;">(${groups[cat].length})</span>`;
+    groupDiv.appendChild(titleDiv);
+
+    const innerGrid = document.createElement('div');
+    innerGrid.className = 'projects-grid';
+
+    groups[cat].forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      const tagsHtml = (p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+      const fileHtml = p.link
+        ? `<a class="project-file-link" href="${p.link}" target="_blank">📎 View Project File</a>`
+        : `<div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--light-gray);padding:8px 0;">📂 No file attached</div>`;
+      card.innerHTML = `
+        <div class="project-header">
+          <div>
+            <div class="project-type-badge">${meta.label}</div>
+            <div class="project-title">${p.title}</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">${p.desc}</p>
+          <div class="project-tags">${tagsHtml}</div>
+          ${fileHtml}
+        </div>`;
+      innerGrid.appendChild(card);
+    });
+
+    groupDiv.appendChild(innerGrid);
+    grid.appendChild(groupDiv);
+  });
+
   // Fade in animation
   document.querySelectorAll('.project-card').forEach((el,i) => {
     el.style.opacity='0'; el.style.transform='translateY(18px)';
-    el.style.transition=`opacity 0.5s ${i*0.08}s ease, transform 0.5s ${i*0.08}s ease, border 0.3s, box-shadow 0.3s`;
+    el.style.transition=`opacity 0.5s ${i*0.05}s ease, transform 0.5s ${i*0.05}s ease, border 0.3s, box-shadow 0.3s`;
     setTimeout(() => { el.style.opacity='1'; el.style.transform='translateY(0)'; }, 50);
   });
 }
@@ -676,10 +740,11 @@ async function renderAdminProjects() {
     projects.forEach(p => {
       const item = document.createElement('div');
       item.className = 'project-admin-card';
+      const meta = CATEGORY_META[p.type] || { label: p.type||'Other', icon: '📁' };
       item.innerHTML = `
         <div class="proj-admin-info">
           <div class="proj-admin-title">${p.title}</div>
-          <div class="proj-admin-type">${p.type||''} ${p.link ? '· 🔗 Link attached' : ''}</div>
+          <div class="proj-admin-type">${meta.icon} ${meta.label} ${p.link ? '· 🔗 Link attached' : ''}</div>
         </div>
         <div class="proj-admin-actions">
           <button class="edit-btn" onclick="editProject('${p.id}')">✏️ Edit</button>
@@ -702,7 +767,7 @@ function showAddForm() {
   document.getElementById('f-title').value = '';
   document.getElementById('f-desc').value = '';
   document.getElementById('f-tags').value = '';
-  document.getElementById('f-type').value = 'Textile';
+  document.getElementById('f-type').value = 'Word';
   document.getElementById('f-link').value = '';
   document.getElementById('proj-form').style.display = 'block';
   document.getElementById('proj-form').scrollIntoView({behavior:'smooth'});
@@ -720,7 +785,7 @@ async function editProject(id) {
     document.getElementById('f-title').value = p.title||'';
     document.getElementById('f-desc').value = p.desc||'';
     document.getElementById('f-tags').value = (p.tags||[]).join(', ');
-    document.getElementById('f-type').value = p.type||'Textile';
+    document.getElementById('f-type').value = p.type||'Word';
     document.getElementById('f-link').value = p.link||'';
     document.getElementById('proj-form').style.display = 'block';
     document.getElementById('proj-form').scrollIntoView({behavior:'smooth'});
