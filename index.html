@@ -63,7 +63,7 @@ nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-
 .nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
 .nav-links a{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--gray);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;padding-bottom:2px;border-bottom:2px solid transparent;}
 .nav-links a:hover{color:var(--green);border-bottom-color:var(--green);}
-.nav-admin-btn{padding:8px 18px;background:var(--green);color:var(--white)!important;border-radius:4px;font-family:'Space Mono',monospace;font-size:0.62rem!important;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.3s;border-bottom:none!important;}
+.nav-admin-btn{display:none;}
 .nav-admin-btn:hover{background:var(--green-light)!important;transform:translateY(-1px);}
 #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 64px 60px;background:var(--hero-grad);position:relative;overflow:hidden;gap:60px;}
 .hero-bg-circle{position:absolute;right:-120px;top:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.25) 0%,transparent 70%);z-index:0;}
@@ -259,15 +259,34 @@ footer{padding:36px 64px;background:var(--black);display:flex;justify-content:sp
 #certificates .section-label{color:var(--deep-blue);}
 #certificates .section-underline{background:linear-gradient(90deg,var(--deep-blue),var(--sky-blue));}
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+.cert-partition{margin-bottom:52px;}
+.cert-partition:last-child{margin-bottom:0;}
+.cert-partition-title{font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px;font-weight:700;}
+.cert-partition-title.academic{color:var(--deep-blue);}
+.cert-partition-title.extra{color:var(--pink);}
+.cert-partition-title::after{content:'';flex:1;height:1px;background:var(--border2);}
 .cert-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:26px;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);position:relative;overflow:hidden;}
-.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--deep-blue),var(--sky-blue));}
-.cert-card:hover{border-color:var(--sky-blue);transform:translateY(-5px);box-shadow:var(--shadow-blue);}
+.cert-card.academic::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--deep-blue),var(--sky-blue));}
+.cert-card.extracurricular::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--pink),var(--pink-light));}
+.cert-card.academic:hover{border-color:var(--sky-blue);transform:translateY(-5px);box-shadow:var(--shadow-blue);}
+.cert-card.extracurricular:hover{border-color:var(--pink);transform:translateY(-5px);box-shadow:var(--shadow-pink);}
 .cert-icon{font-size:2.2rem;margin-bottom:14px;}
 .cert-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;}
 .cert-issuer{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--deep-blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
-.cert-date{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--light-gray);letter-spacing:1px;margin-bottom:14px;}
+.cert-card.extracurricular .cert-issuer{color:var(--pink);}
+.cert-date{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--light-gray);letter-spacing:1px;margin-bottom:10px;}
+.cert-desc-text{font-size:0.82rem;color:var(--gray);line-height:1.6;margin-bottom:14px;}
 .cert-link{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:6px;color:var(--deep-blue);font-family:'Space Mono',monospace;font-size:0.62rem;cursor:pointer;transition:all 0.3s;text-decoration:none;}
 .cert-link:hover{background:var(--deep-blue);color:var(--white);}
+.cert-link.pink{background:#fce7f3;border-color:#fbcfe8;color:var(--pink);}
+.cert-link.pink:hover{background:var(--pink);color:var(--white);}
+.cert-img-container{margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
+.cert-img-container img{width:100%;max-height:160px;object-fit:cover;display:block;transition:transform 0.3s;}
+.cert-img-container:hover img{transform:scale(1.03);}
+/* Lightbox */
+#cert-lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;cursor:pointer;}
+#cert-lightbox.open{display:flex;}
+#cert-lightbox img{max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
 
 /* ===== ADMIN CERT CARDS ===== */
 .cert-admin-card{padding:16px 20px;background:var(--off-white);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:10px;}
@@ -467,6 +486,11 @@ footer{padding:36px 64px;background:var(--black);display:flex;justify-content:sp
   <div class="footer-text">PTEC · Apparel Engg · <span>L-2, T-2</span></div>
 </footer>
 
+<!-- Image Lightbox -->
+<div id="cert-lightbox" onclick="closeLightbox()">
+  <img id="cert-lightbox-img" src="" alt="Certificate">
+</div>
+
 <!-- ===== ADMIN PANEL ===== -->
 <div id="admin-overlay">
   <div class="admin-panel">
@@ -545,13 +569,35 @@ footer{padding:36px 64px;background:var(--black);display:flex;justify-content:sp
             <input type="hidden" id="cert-edit-id">
             <div class="form-row">
               <div><label class="f-label">Certificate Title *</label><input class="f-input" id="cert-title" placeholder="e.g. AutoCAD Fundamentals"></div>
-              <div><label class="f-label">Issuing Organization *</label><input class="f-input" id="cert-issuer" placeholder="e.g. Coursera, BUET"></div>
+              <div><label class="f-label">Category *</label>
+                <select class="f-select" id="cert-category">
+                  <option value="academic">🎓 Academic Certificate</option>
+                  <option value="extracurricular">⭐ Extra Curricular</option>
+                </select>
+              </div>
             </div>
             <div class="form-row">
+              <div><label class="f-label">Issuing Organization *</label><input class="f-input" id="cert-issuer" placeholder="e.g. Coursera, BUET, PTEC"></div>
               <div><label class="f-label">Date *</label><input class="f-input" id="cert-date" placeholder="e.g. March 2024"></div>
-              <div><label class="f-label">Certificate Icon (emoji)</label><input class="f-input" id="cert-icon" placeholder="🏆" style="font-size:1.4rem;"></div>
             </div>
-            <div class="form-full"><label class="f-label">Certificate Link (optional)</label><input class="f-input" id="cert-link" placeholder="Paste certificate URL or Google Drive link..."></div>
+            <div class="form-full"><label class="f-label">Short Description</label><input class="f-input" id="cert-desc" placeholder="e.g. Completed 40-hour course on fabric construction"></div>
+            <div class="form-row">
+              <div><label class="f-label">Certificate Icon (emoji)</label><input class="f-input" id="cert-icon" placeholder="🏆" style="font-size:1.4rem;"></div>
+              <div><label class="f-label">Certificate Link (optional)</label><input class="f-input" id="cert-link" placeholder="Paste Google Drive or URL link..."></div>
+            </div>
+            <div class="form-full">
+              <label class="f-label">📷 Certificate Image (JPG/PNG — optional)</label>
+              <div class="file-upload-area" onclick="document.getElementById('cert-img-input').click()" style="cursor:pointer;">
+                <input type="file" id="cert-img-input" accept=".jpg,.jpeg,.png,.webp" style="display:none" onchange="handleCertImage(event)">
+                <div class="file-upload-icon">🖼️</div>
+                <div class="file-upload-text">Click to upload certificate image (JPG/PNG)</div>
+                <div class="file-status" id="cert-img-status"></div>
+              </div>
+              <div id="cert-img-preview" style="display:none;margin-top:12px;">
+                <img id="cert-img-thumb" style="max-width:200px;max-height:140px;border-radius:8px;border:2px solid var(--border);object-fit:cover;">
+                <button onclick="clearCertImage()" style="display:block;margin-top:6px;padding:4px 10px;background:#fff5f5;border:1px solid #ffcccc;color:#dc3545;border-radius:4px;font-size:0.65rem;cursor:pointer;font-family:'Space Mono',monospace;">✕ Remove Image</button>
+              </div>
+            </div>
             <div class="form-actions">
               <button class="admin-btn sm" onclick="saveCert()">💾 Save Certificate</button>
               <button class="admin-btn sm secondary" onclick="cancelCertForm()">Cancel</button>
@@ -789,6 +835,34 @@ function renderCV(cvDocs) {
 
 // ===== ADMIN PANEL =====
 let adminLoggedIn = false;
+// ===== SECRET URL LISTENER — Layer 2 Security =====
+const SECRET_HASH = '#open-admin-asif';
+function checkSecretURL() {
+  if(window.location.hash === SECRET_HASH) {
+    // Show admin button temporarily
+    const btn = document.querySelector('.nav-admin-btn');
+    if(btn) {
+      btn.style.display = 'inline-block';
+      btn.style.padding = '8px 18px';
+      btn.style.background = 'var(--green)';
+      btn.style.color = 'var(--white)';
+      btn.style.borderRadius = '4px';
+      btn.style.fontFamily = "'Space Mono',monospace";
+      btn.style.fontSize = '0.62rem';
+      btn.style.letterSpacing = '1px';
+      btn.style.textTransform = 'uppercase';
+      btn.style.textDecoration = 'none';
+    }
+    // Auto open panel
+    document.getElementById('admin-overlay').classList.add('open');
+    if(adminLoggedIn) showDash(); else showLogin();
+    // Clean URL so others can't see
+    history.replaceState(null, '', window.location.pathname);
+  }
+}
+window.addEventListener('load', checkSecretURL);
+window.addEventListener('hashchange', checkSecretURL);
+
 function openAdmin(e) {
   e.preventDefault();
   document.getElementById('admin-overlay').classList.add('open');
@@ -994,24 +1068,79 @@ function renderCertificates(certs) {
     grid.innerHTML = '<div style="text-align:center;padding:60px;font-family:Space Mono,monospace;font-size:0.72rem;color:var(--light-gray);">No certificates yet. Add from Admin Panel!</div>';
     return;
   }
+  // Split into 2 groups
+  const academic = certs.filter(c => c.category === 'academic' || !c.category);
+  const extra = certs.filter(c => c.category === 'extracurricular');
+
   grid.innerHTML = '';
-  certs.forEach((c,i) => {
+  grid.style.display = 'block';
+
+  function buildCard(c, i) {
+    const isExtra = c.category === 'extracurricular';
     const card = document.createElement('div');
-    card.className = 'cert-card';
+    card.className = `cert-card ${isExtra ? 'extracurricular' : 'academic'}`;
     card.style.opacity='0'; card.style.transform='translateY(18px)';
     card.style.transition=`opacity 0.5s ${i*0.07}s ease, transform 0.5s ${i*0.07}s ease, border 0.3s, box-shadow 0.3s`;
+
+    const imgHtml = c.image
+      ? `<div class="cert-img-container" onclick="openLightbox('${c.image.substring(0,50)}cert${i}')">
+           <img src="${c.image}" alt="${c.title}" id="cert${i}img" onerror="this.parentElement.style.display='none'">
+         </div>`
+      : '';
+
+    // Store full image in data attr to avoid inline string issues
+    const linkCls = isExtra ? 'cert-link pink' : 'cert-link';
     const linkHtml = c.link
-      ? `<a class="cert-link" href="${c.link}" target="_blank">🔗 View Certificate</a>`
-      : `<span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--light-gray);">📂 No link</span>`;
+      ? `<a class="${linkCls}" href="${c.link}" target="_blank">🔗 View Certificate</a>`
+      : '';
+
     card.innerHTML = `
+      ${imgHtml}
       <div class="cert-icon">${c.icon||'🏆'}</div>
       <div class="cert-title">${c.title}</div>
       <div class="cert-issuer">${c.issuer||''}</div>
       <div class="cert-date">${c.date||''}</div>
+      ${c.desc ? `<div class="cert-desc-text">${c.desc}</div>` : ''}
       ${linkHtml}`;
-    grid.appendChild(card);
-    setTimeout(()=>{ card.style.opacity='1'; card.style.transform='translateY(0)'; }, 50);
-  });
+
+    // Fix lightbox click with data
+    if(c.image) {
+      const imgCont = card.querySelector('.cert-img-container');
+      if(imgCont) imgCont.onclick = () => openLightbox(c.image);
+    }
+    return card;
+  }
+
+  function buildPartition(title, cls, icon, items) {
+    if(!items.length) return;
+    const part = document.createElement('div');
+    part.className = 'cert-partition';
+    const titleDiv = document.createElement('div');
+    titleDiv.className = `cert-partition-title ${cls}`;
+    titleDiv.innerHTML = `${icon} ${title} <span style="font-weight:400;color:var(--light-gray);">(${items.length})</span>`;
+    part.appendChild(titleDiv);
+    const innerGrid = document.createElement('div');
+    innerGrid.className = 'cert-grid';
+    items.forEach((c,i) => {
+      const card = buildCard(c, i);
+      innerGrid.appendChild(card);
+      setTimeout(()=>{ card.style.opacity='1'; card.style.transform='translateY(0)'; }, 60 + i*70);
+    });
+    part.appendChild(innerGrid);
+    grid.appendChild(part);
+  }
+
+  buildPartition('Academic Certificates', 'academic', '🎓', academic);
+  buildPartition('Extra Curricular Certificates', 'extra', '⭐', extra);
+}
+
+// Lightbox
+function openLightbox(src) {
+  document.getElementById('cert-lightbox-img').src = src;
+  document.getElementById('cert-lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('cert-lightbox').classList.remove('open');
 }
 
 // ===== RENDER STATUS BANNER =====
@@ -1060,6 +1189,29 @@ async function renderAdminCerts() {
   } catch(e) { list.innerHTML='<p style="color:#dc3545;font-size:0.7rem;">⚠️ '+e.message+'</p>'; }
 }
 
+let currentCertImage = null;
+
+function handleCertImage(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 1.5 * 1024 * 1024) { toast('⚠️ Image too large! Max 1.5MB'); return; }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    currentCertImage = ev.target.result;
+    document.getElementById('cert-img-status').textContent = '✅ ' + file.name;
+    document.getElementById('cert-img-thumb').src = currentCertImage;
+    document.getElementById('cert-img-preview').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearCertImage() {
+  currentCertImage = null;
+  document.getElementById('cert-img-input').value = '';
+  document.getElementById('cert-img-status').textContent = '';
+  document.getElementById('cert-img-preview').style.display = 'none';
+}
+
 function showCertForm() {
   document.getElementById('cert-form-title').textContent='Add New Certificate';
   document.getElementById('cert-edit-id').value='';
@@ -1068,6 +1220,9 @@ function showCertForm() {
   document.getElementById('cert-date').value='';
   document.getElementById('cert-icon').value='🏆';
   document.getElementById('cert-link').value='';
+  document.getElementById('cert-desc').value='';
+  document.getElementById('cert-category').value='academic';
+  clearCertImage();
   document.getElementById('cert-form').style.display='block';
   document.getElementById('cert-form').scrollIntoView({behavior:'smooth'});
 }
@@ -1084,6 +1239,15 @@ async function editCert(id) {
     document.getElementById('cert-date').value=c.date||'';
     document.getElementById('cert-icon').value=c.icon||'🏆';
     document.getElementById('cert-link').value=c.link||'';
+    document.getElementById('cert-desc').value=c.desc||'';
+    document.getElementById('cert-category').value=c.category||'academic';
+    // Load existing image
+    if(c.image) {
+      currentCertImage = c.image;
+      document.getElementById('cert-img-thumb').src = c.image;
+      document.getElementById('cert-img-preview').style.display = 'block';
+      document.getElementById('cert-img-status').textContent = '✅ Existing image loaded';
+    } else { clearCertImage(); }
     document.getElementById('cert-form').style.display='block';
     document.getElementById('cert-form').scrollIntoView({behavior:'smooth'});
   } catch(e){ toast('❌ '+e.message); }
@@ -1096,18 +1260,21 @@ async function saveCert() {
   const date=document.getElementById('cert-date').value.trim();
   const icon=document.getElementById('cert-icon').value.trim()||'🏆';
   const link=document.getElementById('cert-link').value.trim();
+  const desc=document.getElementById('cert-desc').value.trim();
+  const category=document.getElementById('cert-category').value;
   const editId=document.getElementById('cert-edit-id').value;
+  const image = currentCertImage || null;
   try {
-    toast('⏳ Saving...');
+    toast('⏳ Saving certificate...');
     if(editId) {
-      await window.fbUpdateDoc(window.fbDoc(window.db,'certificates',editId),{title,issuer,date,icon,link,updatedAt:Date.now()});
+      await window.fbUpdateDoc(window.fbDoc(window.db,'certificates',editId),{title,issuer,date,icon,link,desc,category,image,updatedAt:Date.now()});
       toast('✅ Certificate updated!');
     } else {
-      await window.fbAddDoc(window.fbCollection(window.db,'certificates'),{title,issuer,date,icon,link,createdAt:Date.now()});
+      await window.fbAddDoc(window.fbCollection(window.db,'certificates'),{title,issuer,date,icon,link,desc,category,image,createdAt:Date.now()});
       toast('✅ Certificate added! Visible on all devices!');
     }
     await loadAllData(); await renderAdminCerts(); cancelCertForm();
-  } catch(e){toast('❌ '+e.message);}
+  } catch(e){toast('❌ Firebase error: '+e.message);}
 }
 
 async function deleteCert(id) {
@@ -1119,7 +1286,10 @@ async function deleteCert(id) {
   } catch(e){toast('❌ '+e.message);}
 }
 
-function cancelCertForm(){document.getElementById('cert-form').style.display='none';}
+function cancelCertForm(){
+  document.getElementById('cert-form').style.display='none';
+  clearCertImage();
+}
 
 // ===== STATUS ADMIN =====
 async function loadStatusInAdmin() {
